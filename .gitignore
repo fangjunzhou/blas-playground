@@ -1,1 +1,8 @@
+# Misc
+.cache/
+
+# Vcpkg
+vcpkg_installed/
+
+# Build artifacts.
 build/
