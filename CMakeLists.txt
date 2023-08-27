@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.25.1)
+cmake_minimum_required(VERSION 3.27.1)
 
-# Setup vcpkg.
+# Setup vcpkg
 set(
   CMAKE_TOOLCHAIN_FILE
   ${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
@@ -19,5 +19,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE STRING "Binary 
 
 # ---------------------- Build Project  ---------------------- #
 
-# Build src.
+# Build src
 add_subdirectory(src)
+
+# Build benchmark
+add_subdirectory(benchmarks)
