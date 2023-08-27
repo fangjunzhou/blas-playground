@@ -13,8 +13,8 @@ static void mkl_gemm_benchmark(benchmark::State &state) {
   for (size_t i = 0; i < matSize; i++) {
     for (size_t j = 0; j < matSize; j++) {
       size_t idx = i * matSize + j;
-      matA[idx] = std::rand();
-      matB[idx] = std::rand();
+      matA[idx] = (float)std::rand() / (float)RAND_MAX;
+      matB[idx] = (float)std::rand() / (float)RAND_MAX;
     }
   }
   // Output matrix.
