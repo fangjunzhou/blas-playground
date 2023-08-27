@@ -17,10 +17,17 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE STRING "Library Output" FORCE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE STRING "Binary Output" FORCE)
 
+# ----------------------- Dependencies ----------------------- #
+
+find_package(MKL CONFIG REQUIRED)
+
 # ---------------------- Build Project  ---------------------- #
 
 # Build src
 add_subdirectory(src)
 
-# Build benchmark
+# Build tests
+add_subdirectory(tests)
+
+# Build benchmarks
 add_subdirectory(benchmarks)

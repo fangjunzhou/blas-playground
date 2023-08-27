@@ -1,8 +1,11 @@
-set(
-  SOURCE_FILES
-  main.cpp
+# GEMM.
+file(
+  GLOB_RECURSE
+  GEMM_SRC
+  ${CMAKE_CURRENT_SOURCE_DIR}/gemm/*.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/gemm/*.cpp
 )
-add_executable(
-  main
-  ${SOURCE_FILES}
+add_library(
+  gemm
+  ${GEMM_SRC}
 )
