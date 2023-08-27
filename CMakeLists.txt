@@ -7,7 +7,7 @@ set(
   CACHE STRING "Vcpkg toolchain file"
 )
 
-project(gemm-playground)
+project(blas-playground)
 
 # --------------------- Project Settings --------------------- #
 

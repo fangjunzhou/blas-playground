@@ -3,6 +3,6 @@ set(
   main.cpp
 )
 add_executable(
-  gemm
+  main
   ${SOURCE_FILES}
 )
