@@ -33,7 +33,7 @@ TEST(blas_leve3_test, gemm_vanilla) {
               matSize, 1, matA.data(), matSize, matB.data(), matSize, 0,
               matCRef.data(), matSize);
   // Vanilla GEMM implementation.
-  gemm_vanilla(matA, matB, matC, matSize);
+  gemmVanilla(matA, matB, matC, matSize);
 
   // Compare the result.
   for (size_t i = 0; i < matSize * matSize; i++) {
