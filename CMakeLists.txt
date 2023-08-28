@@ -31,6 +31,7 @@ if (OPENMP_FOUND)
 endif()
 
 # Intel MKL
+set(MKL_DIR "/opt/intel/oneapi/mkl/latest/lib/cmake/mkl")
 find_package(MKL CONFIG REQUIRED)
 
 # ---------------------- Build Project  ---------------------- #
