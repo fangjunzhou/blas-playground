@@ -63,3 +63,15 @@ BENCHMARK(gemmVanillaParallel_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
     ->Range(2, 1024);
+
+static void gemmTranspose_benchmark(benchmark::State &state) {
+  size_t matSize = state.range(0);
+  for (auto _ : state) {
+    gemmTranspose(matA, matB, matC, matSize);
+  }
+}
+
+BENCHMARK(gemmTranspose_benchmark)
+    ->Setup(GemmSetup)
+    ->RangeMultiplier(2)
+    ->Range(2, 1024);

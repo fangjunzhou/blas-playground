@@ -9,3 +9,8 @@ add_library(
   gemm
   ${GEMM_SRC}
 )
+target_link_libraries(
+  gemm
+  PRIVATE
+  MKL::MKL
+)
