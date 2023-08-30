@@ -1,3 +1,6 @@
 [submodule "vcpkg"]
 	path = vcpkg
 	url = git@github.com:microsoft/vcpkg.git
+[submodule "external/streambenchmark"]
+	path = external/streambenchmark
+	url = git@github.com:fangjunzhou/stream-benchmark.git
