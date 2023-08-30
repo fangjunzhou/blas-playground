@@ -36,6 +36,9 @@ find_package(MKL CONFIG REQUIRED)
 
 # ---------------------- Build Project  ---------------------- #
 
+# Build STREAM benchmark.
+add_subdirectory(external/streambenchmark)
+
 # Build src
 add_subdirectory(src)
 
