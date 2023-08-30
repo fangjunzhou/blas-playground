@@ -119,3 +119,15 @@ BENCHMARK(gemmBlockTransposeCopy_benchmark)
     ->Setup(GemmSetup)
     ->ArgsProduct({benchmark::CreateRange(32, 2048, 2)})
     ->Unit(benchmark::kMillisecond);
+
+static void gemmBlockCopy_benchmark(benchmark::State &state) {
+  size_t matSize = state.range(0);
+  for (auto _ : state) {
+    gemmBlockCopy(matA, matB, matC, matSize);
+  }
+}
+
+BENCHMARK(gemmBlockCopy_benchmark)
+    ->Setup(GemmSetup)
+    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2)})
+    ->Unit(benchmark::kMillisecond);

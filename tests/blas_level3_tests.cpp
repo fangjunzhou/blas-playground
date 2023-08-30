@@ -116,3 +116,17 @@ TEST_F(BlasLevel3Test, gemmBlockTransposeCopy) {
     EXPECT_NEAR(matC[i], matCRef[i], ALLOWED_ERR);
   }
 }
+
+TEST_F(BlasLevel3Test, gemmBlockCopy) {
+  // MKL reference
+  cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, MAT_SIZE, MAT_SIZE,
+              MAT_SIZE, 1, this->matA.data(), MAT_SIZE, this->matB.data(),
+              MAT_SIZE, 0, this->matCRef.data(), MAT_SIZE);
+  // Block GEMM implementation.
+  gemmBlockCopy(this->matA, this->matB, this->matC, MAT_SIZE);
+
+  // Compare the result.
+  for (size_t i = 0; i < MAT_SIZE * MAT_SIZE; i++) {
+    EXPECT_NEAR(matC[i], matCRef[i], ALLOWED_ERR);
+  }
+}
