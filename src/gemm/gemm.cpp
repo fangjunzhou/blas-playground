@@ -93,15 +93,18 @@ void gemmBlock(const std::vector<float> &matA, const std::vector<float> &matB,
         // Block GEMM.
         for (size_t i = 0; i < blockSize; i++) {
           for (size_t j = 0; j < blockSize; j++) {
+            size_t cIdx = bi * blockSize * blockNum * blockSize +
+                          i * blockNum * blockSize + bj * blockSize + j;
+            float partial = 0;
+#pragma omp simd reduction(+ : partial)
             for (size_t k = 0; k < blockSize; k++) {
               size_t aIdx = bi * blockSize * blockNum * blockSize +
                             i * blockNum * blockSize + bk * blockSize + k;
               size_t bIdx = bk * blockSize * blockNum * blockSize +
                             k * blockNum * blockSize + bj * blockSize + j;
-              size_t cIdx = bi * blockSize * blockNum * blockSize +
-                            i * blockNum * blockSize + bj * blockSize + j;
-              matC[cIdx] += matA[aIdx] * matB[bIdx];
+              partial += matA[aIdx] * matB[bIdx];
             }
+            matC[cIdx] += partial;
           }
         }
       }

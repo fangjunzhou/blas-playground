@@ -91,5 +91,5 @@ static void gemmBlock_benchmark(benchmark::State &state) {
 BENCHMARK(gemmBlock_benchmark)
     ->Setup(GemmSetup)
     ->ArgsProduct({benchmark::CreateRange(32, 2048, 2),
-                   benchmark::CreateRange(2, 16, 2)})
+                   benchmark::CreateRange(2, 32, 2)})
     ->Unit(benchmark::kMillisecond);
