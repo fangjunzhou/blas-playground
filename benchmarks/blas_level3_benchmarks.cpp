@@ -38,7 +38,8 @@ static void mkl_gemm_benchmark(benchmark::State &state) {
 BENCHMARK(mkl_gemm_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(2, 1024);
+    ->Range(16, 2048)
+    ->Unit(benchmark::kMillisecond);
 
 static void gemmVanilla_benchmark(benchmark::State &state) {
   size_t matSize = state.range(0);
@@ -50,7 +51,8 @@ static void gemmVanilla_benchmark(benchmark::State &state) {
 BENCHMARK(gemmVanilla_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(2, 1024);
+    ->Range(16, 2048)
+    ->Unit(benchmark::kMillisecond);
 
 static void gemmVanillaParallel_benchmark(benchmark::State &state) {
   size_t matSize = state.range(0);
@@ -62,7 +64,8 @@ static void gemmVanillaParallel_benchmark(benchmark::State &state) {
 BENCHMARK(gemmVanillaParallel_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(2, 1024);
+    ->Range(16, 2048)
+    ->Unit(benchmark::kMillisecond);
 
 static void gemmTranspose_benchmark(benchmark::State &state) {
   size_t matSize = state.range(0);
@@ -74,4 +77,19 @@ static void gemmTranspose_benchmark(benchmark::State &state) {
 BENCHMARK(gemmTranspose_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(2, 1024);
+    ->Range(16, 2048)
+    ->Unit(benchmark::kMillisecond);
+
+static void gemmBlock_benchmark(benchmark::State &state) {
+  size_t matSize = state.range(0);
+  size_t blockSize = state.range(1);
+  for (auto _ : state) {
+    gemmBlock(matA, matB, matC, matSize, blockSize);
+  }
+}
+
+BENCHMARK(gemmBlock_benchmark)
+    ->Setup(GemmSetup)
+    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2),
+                   benchmark::CreateRange(2, 16, 2)})
+    ->Unit(benchmark::kMillisecond);

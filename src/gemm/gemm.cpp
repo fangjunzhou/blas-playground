@@ -74,3 +74,37 @@ void gemmTranspose(const std::vector<float> &matA,
     }
   }
 }
+
+void gemmBlock(const std::vector<float> &matA, const std::vector<float> &matB,
+               std::vector<float> &matC, size_t matSize, size_t blockSize) {
+  size_t blockNum = matSize / blockSize;
+
+  // Clear matC.
+#pragma omp parallel for
+  for (size_t i = 0; i < matC.size(); i++) {
+    matC[i] = 0;
+  }
+
+  // Traverse blocks.
+#pragma omp parallel for
+  for (size_t bi = 0; bi < blockNum; bi++) {
+    for (size_t bj = 0; bj < blockNum; bj++) {
+      for (size_t bk = 0; bk < blockNum; bk++) {
+        // Block GEMM.
+        for (size_t i = 0; i < blockSize; i++) {
+          for (size_t j = 0; j < blockSize; j++) {
+            for (size_t k = 0; k < blockSize; k++) {
+              size_t aIdx = bi * blockSize * blockNum * blockSize +
+                            i * blockNum * blockSize + bk * blockSize + k;
+              size_t bIdx = bk * blockSize * blockNum * blockSize +
+                            k * blockNum * blockSize + bj * blockSize + j;
+              size_t cIdx = bi * blockSize * blockNum * blockSize +
+                            i * blockNum * blockSize + bj * blockSize + j;
+              matC[cIdx] += matA[aIdx] * matB[bIdx];
+            }
+          }
+        }
+      }
+    }
+  }
+}
