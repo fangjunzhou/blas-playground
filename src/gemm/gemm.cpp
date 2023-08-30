@@ -111,3 +111,47 @@ void gemmBlock(const std::vector<float> &matA, const std::vector<float> &matB,
     }
   }
 }
+
+void gemmBlockTranspose(const std::vector<float> &matA,
+                        const std::vector<float> &matB,
+                        std::vector<float> &matC, size_t matSize,
+                        size_t blockSize) {
+  // Transpose matrix B.
+  std::vector<float> matBTrans(matB.size());
+  mkl_somatcopy('r', 't', matSize, matSize, 1, matB.data(), matSize,
+                matBTrans.data(), matSize);
+
+  size_t blockNum = matSize / blockSize;
+
+  // Clear matC.
+#pragma omp parallel for
+  for (size_t i = 0; i < matC.size(); i++) {
+    matC[i] = 0;
+  }
+
+  // Traverse blocks.
+#pragma omp parallel for
+  for (size_t bi = 0; bi < blockNum; bi++) {
+    for (size_t bj = 0; bj < blockNum; bj++) {
+      for (size_t bk = 0; bk < blockNum; bk++) {
+        // Block GEMM.
+        for (size_t i = 0; i < blockSize; i++) {
+          for (size_t j = 0; j < blockSize; j++) {
+            size_t cIdx = bi * blockSize * blockNum * blockSize +
+                          i * blockNum * blockSize + bj * blockSize + j;
+            float partial = 0;
+#pragma omp simd reduction(+ : partial)
+            for (size_t k = 0; k < blockSize; k++) {
+              size_t aIdx = bi * blockSize * blockNum * blockSize +
+                            i * blockNum * blockSize + bk * blockSize + k;
+              size_t bIdx = bj * blockSize * blockNum * blockSize +
+                            j * blockNum * blockSize + bk * blockSize + k;
+              partial += matA[aIdx] * matBTrans[bIdx];
+            }
+            matC[cIdx] += partial;
+          }
+        }
+      }
+    }
+  }
+}
