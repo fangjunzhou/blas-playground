@@ -21,3 +21,7 @@ void gemmBlockTranspose(const std::vector<float> &matA,
                         const std::vector<float> &matB,
                         std::vector<float> &matC, size_t matSize,
                         size_t blockSize);
+
+void gemmBlockTransposeCopy(const std::vector<float> &matA,
+                            const std::vector<float> &matB,
+                            std::vector<float> &matC, size_t matSize);
