@@ -38,7 +38,7 @@ static void mkl_gemm_benchmark(benchmark::State &state) {
 BENCHMARK(mkl_gemm_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(16, 2048)
+    ->Range(16, 1024)
     ->Unit(benchmark::kMillisecond);
 
 static void gemmVanilla_benchmark(benchmark::State &state) {
@@ -51,7 +51,7 @@ static void gemmVanilla_benchmark(benchmark::State &state) {
 BENCHMARK(gemmVanilla_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(16, 2048)
+    ->Range(16, 1024)
     ->Unit(benchmark::kMillisecond);
 
 static void gemmVanillaParallel_benchmark(benchmark::State &state) {
@@ -64,7 +64,7 @@ static void gemmVanillaParallel_benchmark(benchmark::State &state) {
 BENCHMARK(gemmVanillaParallel_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(16, 2048)
+    ->Range(16, 1024)
     ->Unit(benchmark::kMillisecond);
 
 static void gemmTranspose_benchmark(benchmark::State &state) {
@@ -77,7 +77,7 @@ static void gemmTranspose_benchmark(benchmark::State &state) {
 BENCHMARK(gemmTranspose_benchmark)
     ->Setup(GemmSetup)
     ->RangeMultiplier(2)
-    ->Range(16, 2048)
+    ->Range(16, 1024)
     ->Unit(benchmark::kMillisecond);
 
 static void gemmBlock_benchmark(benchmark::State &state) {
@@ -90,7 +90,7 @@ static void gemmBlock_benchmark(benchmark::State &state) {
 
 BENCHMARK(gemmBlock_benchmark)
     ->Setup(GemmSetup)
-    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2),
+    ->ArgsProduct({benchmark::CreateRange(16, 1024, 2),
                    benchmark::CreateRange(2, 16, 2)})
     ->Unit(benchmark::kMillisecond);
 
@@ -104,7 +104,7 @@ static void gemmBlockTranspose_benchmark(benchmark::State &state) {
 
 BENCHMARK(gemmBlockTranspose_benchmark)
     ->Setup(GemmSetup)
-    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2),
+    ->ArgsProduct({benchmark::CreateRange(16, 1024, 2),
                    benchmark::CreateRange(2, 16, 2)})
     ->Unit(benchmark::kMillisecond);
 
@@ -117,7 +117,7 @@ static void gemmBlockTransposeCopy_benchmark(benchmark::State &state) {
 
 BENCHMARK(gemmBlockTransposeCopy_benchmark)
     ->Setup(GemmSetup)
-    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2)})
+    ->ArgsProduct({benchmark::CreateRange(16, 1024, 2)})
     ->Unit(benchmark::kMillisecond);
 
 static void gemmBlockCopy_benchmark(benchmark::State &state) {
@@ -129,7 +129,7 @@ static void gemmBlockCopy_benchmark(benchmark::State &state) {
 
 BENCHMARK(gemmBlockCopy_benchmark)
     ->Setup(GemmSetup)
-    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2)})
+    ->ArgsProduct({benchmark::CreateRange(16, 1024, 2)})
     ->Unit(benchmark::kMillisecond);
 
 static void gemmBlockCopy2_benchmark(benchmark::State &state) {
@@ -141,5 +141,5 @@ static void gemmBlockCopy2_benchmark(benchmark::State &state) {
 
 BENCHMARK(gemmBlockCopy2_benchmark)
     ->Setup(GemmSetup)
-    ->ArgsProduct({benchmark::CreateRange(32, 2048, 2)})
+    ->ArgsProduct({benchmark::CreateRange(16, 1024, 2)})
     ->Unit(benchmark::kMillisecond);

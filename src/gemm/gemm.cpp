@@ -156,7 +156,7 @@ void gemmBlockTranspose(const std::vector<float> &matA,
   }
 }
 
-#define BLOCK_SIZE 16
+#define BLOCK_SIZE 8
 alignas(64) float localA[BLOCK_SIZE][BLOCK_SIZE];
 alignas(64) float localB[BLOCK_SIZE][BLOCK_SIZE];
 alignas(64) float localC[BLOCK_SIZE][BLOCK_SIZE];
